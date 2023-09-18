@@ -1,12 +1,12 @@
 {
-	"name": "@utily/library-template",
-	"version": "0.0.16",
-	"description": "Template library for Typescript.",
+	"name": "@utily/slackly",
+	"version": "0.0.0",
+	"description": "Slack client library for Typescript.",
 	"author": "Utily Contributors",
 	"license": "MIT",
-	"repository": "https://github.com/utily/library-template",
+	"repository": "https://github.com/utily/slackly",
 	"bugs": {
-		"url": "https://github.com/utily/library-template/issues"
+		"url": "https://github.com/utily/slackly/issues"
 	},
 	"homepage": "https://github.com/utily",
 	"private": false,
