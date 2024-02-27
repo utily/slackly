@@ -1,5 +1,5 @@
 {
-	"name": "@utily/slackly",
+	"name": "slackly",
 	"version": "0.0.4",
 	"description": "Slack client library for Typescript.",
 	"author": "Utily Contributors",
