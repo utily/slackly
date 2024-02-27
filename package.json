@@ -1,6 +1,6 @@
 {
 	"name": "@utily/slackly",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"description": "Slack client library for Typescript.",
 	"author": "Utily Contributors",
 	"license": "MIT",
