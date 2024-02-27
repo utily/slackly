@@ -1,7 +1,1 @@
-export { Block } from "./Block"
-export { Confirm } from "./Confirm"
-export { Connection } from "./Connection"
-export { Element } from "./Element"
-export { Method } from "./Method"
-export { Option } from "./Option"
-export { Text } from "./Text"
+export * as slackly from "./slackly"
