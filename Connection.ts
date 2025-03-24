@@ -1,13 +1,13 @@
 import { Action } from "./Action"
 import { Block } from "./Block"
 
-export class Connection<C extends string[]> {
-	private constructor(readonly token: string, readonly channels: Record<C[number], string>) {}
-	async join(channel: C[number]): Promise<boolean> {
+export class Connection<C extends string> {
+	private constructor(readonly token: string, readonly channels: Record<C, string>) {}
+	async join(channel: C): Promise<boolean> {
 		const result = await Connection.postJson("conversations.join", { channel: this.channels[channel] }, this.token)
 		return result.ok
 	}
-	async send(channel: C[number], text?: string, blocks?: Block[]): Promise<string | false> {
+	async send(channel: C, text?: string, blocks?: Block[]): Promise<string | false> {
 		const result = await Connection.postJson(
 			"chat.postMessage",
 			{ channel: this.channels[channel], text: text ?? "", blocks },
@@ -17,7 +17,7 @@ export class Connection<C extends string[]> {
 			? result.message.ts
 			: false
 	}
-	async upload(channels: C, title: string, file: File | string, parent?: string): Promise<string | undefined> {
+	async upload(channels: C[], title: string, file: File | string, parent?: string): Promise<string | undefined> {
 		const data = new FormData()
 		if (typeof file == "string") {
 			data.append("filename", title)
@@ -27,7 +27,7 @@ export class Connection<C extends string[]> {
 			data.append("filetype", file.type)
 			data.append("file", file, file.name)
 		}
-		data.append("channels", channels.map((c: C[number]) => this.channels[c]).join(", "))
+		data.append("channels", channels.map((c: C) => this.channels[c]).join(", "))
 		data.append("title", title)
 		if (parent)
 			data.append("thread_ts", parent)
@@ -35,13 +35,13 @@ export class Connection<C extends string[]> {
 		return result.ok && typeof result.file == "object" ? result.file.id : "undefined"
 	}
 
-	static open<C extends string[]>(
+	static open<C extends string>(
 		token: string | undefined,
-		channels: Record<C[number], string | undefined>
+		channels: Record<C, string | undefined>
 	): Connection<C> | undefined {
 		return !token || Object.values(channels).some(v => typeof v == "undefined")
 			? undefined
-			: new Connection<C>(token, channels as Record<C[number], string>)
+			: new Connection<C>(token, channels as Record<C, string>)
 	}
 	private static async fetch(
 		action: Action,
