@@ -7,10 +7,10 @@ export class Connection<C extends string> {
 		const result = await Connection.postJson("conversations.join", { channel: this.channels[channel] }, this.token)
 		return result.ok
 	}
-	async send(channel: C, text?: string, blocks?: Block[]): Promise<string | false> {
+	async send(channel: C, text?: string, blocks?: Block[], thread?: string): Promise<string | false> {
 		const result = await Connection.postJson(
 			"chat.postMessage",
-			{ channel: this.channels[channel], text: text ?? "", blocks },
+			{ channel: this.channels[channel], text: text ?? "", blocks, thread_ts: thread },
 			this.token
 		)
 		return result.ok && typeof result.message == "object" && typeof result.message.ts == "string"
